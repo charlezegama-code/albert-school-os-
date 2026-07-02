@@ -9,4 +9,5 @@ body {
   color: #F9FAFB;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
+  padding-bottom: env(safe-area-inset-bottom);
 }

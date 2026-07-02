@@ -12,10 +12,10 @@ export interface CalendarEvent {
 export interface Grade {
   id: string
   subjectId: string
-  label: string         // ex: "DS1 Python"
-  predicted: number     // /20
+  label: string
+  predicted: number
   actual: number | null
-  date: string          // 'YYYY-MM-DD'
+  date: string        // 'YYYY-MM-DD'
   aiInsight: string | null
 }
 
@@ -26,11 +26,20 @@ export interface Subject {
   bloc: 'data' | 'business'
 }
 
+export interface WeekIntensity {
+  weekStart: string   // 'YYYY-MM-DD' (Monday)
+  value: number       // 1-5
+}
+
 export interface AppState {
   grades: Grade[]
   customEvents: CalendarEvent[]
+  objectives: Record<string, number>    // subjectId → target /20
+  weeklyIntensity: WeekIntensity[]
   addGrade: (g: Omit<Grade, 'id'>) => void
   updateGrade: (id: string, patch: Partial<Grade>) => void
   addEvent: (e: Omit<CalendarEvent, 'id'>) => void
   deleteEvent: (id: string) => void
+  setObjective: (subjectId: string, target: number) => void
+  setWeekIntensity: (weekStart: string, value: number) => void
 }

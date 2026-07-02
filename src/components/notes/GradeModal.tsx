@@ -89,14 +89,15 @@ export function GradeModal({ open, onClose, subject }: GradeModalProps) {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-50 flex items-end">
+        <div className="fixed inset-0 z-40 flex items-end">
           <motion.div
-            className="absolute inset-0 bg-black/70"
+            className="absolute inset-0 bg-black/60"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.div
-            className="relative w-full bg-card border-t border-subtle rounded-t-2xl p-5 pb-8 max-h-[90vh] overflow-y-auto"
+            className="relative w-full bg-card border-t border-subtle rounded-t-2xl p-5 z-50 max-h-[85vh] overflow-y-auto"
+            style={{ paddingBottom: 'calc(80px + env(safe-area-inset-bottom))' }}
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
           >

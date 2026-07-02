@@ -8,6 +8,8 @@ export const useStore = create<AppState>()(
     (set) => ({
       grades: [],
       customEvents: [],
+      objectives: {},
+      weeklyIntensity: [],
 
       addGrade: (g) =>
         set((s) => ({ grades: [...s.grades, { ...g, id: nanoid() }] })),
@@ -22,6 +24,15 @@ export const useStore = create<AppState>()(
 
       deleteEvent: (id) =>
         set((s) => ({ customEvents: s.customEvents.filter((e) => e.id !== id) })),
+
+      setObjective: (subjectId, target) =>
+        set((s) => ({ objectives: { ...s.objectives, [subjectId]: target } })),
+
+      setWeekIntensity: (weekStart, value) =>
+        set((s) => {
+          const filtered = s.weeklyIntensity.filter((w) => w.weekStart !== weekStart)
+          return { weeklyIntensity: [...filtered, { weekStart, value }].sort((a, b) => a.weekStart.localeCompare(b.weekStart)) }
+        }),
     }),
     { name: 'albert-os-store' }
   )

@@ -4,9 +4,10 @@ import { AnimatePresence } from 'framer-motion'
 import { BottomNav } from './components/layout/BottomNav'
 import { Dashboard } from './pages/Dashboard'
 import { Agenda } from './pages/Agenda'
+import { Score } from './pages/Score'
 import { Notes } from './pages/Notes'
 
-const PAGE_ORDER: Record<string, number> = { '/': 0, '/agenda': 1, '/notes': 2 }
+const PAGE_ORDER: Record<string, number> = { '/': 0, '/agenda': 1, '/score': 2, '/notes': 3 }
 
 export default function App() {
   const location = useLocation()
@@ -26,6 +27,7 @@ export default function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/"       element={<Dashboard direction={direction} />} />
           <Route path="/agenda" element={<Agenda    direction={direction} />} />
+          <Route path="/score"  element={<Score     direction={direction} />} />
           <Route path="/notes"  element={<Notes     direction={direction} />} />
         </Routes>
       </AnimatePresence>
