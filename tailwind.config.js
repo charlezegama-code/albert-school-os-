@@ -4,20 +4,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy:      '#1A2456',
-        sky:       '#5BC4F5',
-        'app-gray':'#F5F7FA',
-        text:      '#1A1A2E',
-        muted:     '#6B7280',
-        amber:     '#F59E0B',
-        red:       '#EF4444',
-        green:     '#10B981',
-        purple:    '#8B5CF6',
+        surface:  '#0A0E1A',
+        card:     '#111827',
+        elevated: '#1C2333',
+        subtle:   '#1F2937',
+        accent:   '#3B82F6',
+        'accent-sky': '#0EA5E9',
+        ink:      '#F9FAFB',
+        muted:    '#6B7280',
+        success:  '#10B981',
+        warning:  '#F59E0B',
+        danger:   '#EF4444',
       },
-      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-      borderRadius: { card: '12px' },
+      fontFamily: { sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'] },
+      borderRadius: { card: '8px' },
+      fontSize: {
+        '2xs': ['10px', '14px'],
+      },
     },
   },
   plugins: [],
 }
-

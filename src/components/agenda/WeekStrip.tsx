@@ -39,10 +39,10 @@ export function WeekStrip({ referenceDate, customEvents }: { referenceDate: Date
         const isToday = dateStr === todayStr
         return (
           <div key={dateStr} className="flex-1 flex flex-col items-center gap-1">
-            <span className="text-[8px] text-white/40 font-semibold uppercase">{DOW[i]}</span>
+            <span className="text-[8px] font-semibold uppercase tracking-widest text-muted">{DOW[i]}</span>
             <span
               className={`text-[11px] font-bold w-6 h-6 flex items-center justify-center rounded-full ${
-                isToday ? 'bg-sky text-navy' : 'text-white/80'
+                isToday ? 'ring-1 ring-accent-sky text-accent-sky' : 'text-ink'
               }`}
             >
               {d.getDate()}

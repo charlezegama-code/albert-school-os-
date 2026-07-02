@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { RefreshCw } from 'lucide-react'
 import { getGradeInsight } from '../../lib/haiku'
 import type { Grade, Subject } from '../../types'
 
@@ -8,8 +7,6 @@ interface AIInsightProps {
   subject: Subject
   onInsightSaved: (insight: string) => void
 }
-
-const SKY = '#5BC4F5'
 
 export function AIInsight({ grade, subject, onInsightSaved }: AIInsightProps) {
   const [loading, setLoading] = useState(false)
@@ -30,30 +27,24 @@ export function AIInsight({ grade, subject, onInsightSaved }: AIInsightProps) {
 
   if (loading) {
     return (
-      <div
-        className="rounded-xl p-3 mt-2"
-        style={{ background: 'rgba(91,196,245,0.08)', border: '1px solid rgba(91,196,245,0.25)' }}
-      >
-        <div className="h-3 w-3/4 rounded animate-pulse" style={{ background: 'rgba(91,196,245,0.3)' }} />
-        <div className="h-3 w-1/2 rounded animate-pulse mt-1.5" style={{ background: 'rgba(91,196,245,0.2)' }} />
+      <div className="mt-2 p-3 bg-elevated border border-subtle rounded-lg">
+        <div className="h-2.5 w-3/4 rounded bg-subtle animate-pulse" />
+        <div className="h-2.5 w-1/2 rounded bg-subtle animate-pulse mt-1.5" />
       </div>
     )
   }
 
   return (
-    <div
-      className="rounded-xl p-3 mt-2"
-      style={{ background: 'rgba(91,196,245,0.08)', border: '1px solid rgba(91,196,245,0.25)' }}
-    >
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-[10px] font-bold tracking-wide" style={{ color: SKY }}>✦ Insight IA</span>
-        <button onClick={generate} className="p-0.5" style={{ color: SKY }}>
-          <RefreshCw size={12} />
+    <div className="mt-2 p-3 bg-elevated border border-subtle rounded-lg">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[10px] font-semibold tracking-widest text-accent">INSIGHT IA</span>
+        <button onClick={generate} className="text-[10px] text-muted active:text-ink transition-colors">
+          ↻ Régénérer
         </button>
       </div>
       {error
-        ? <p className="text-xs text-red-500">{error}</p>
-        : <p className="text-xs text-text leading-relaxed">{grade.aiInsight ?? '—'}</p>
+        ? <p className="text-xs text-danger">{error}</p>
+        : <p className="text-xs text-muted leading-relaxed">{grade.aiInsight ?? '—'}</p>
       }
     </div>
   )

@@ -1,6 +1,4 @@
 import type { Subject, Grade } from '../../types'
-import { Card } from '../ui/Card'
-import { Sparkline } from './Sparkline'
 
 interface SubjectCardProps {
   subject: Subject
@@ -8,75 +6,34 @@ interface SubjectCardProps {
   onClick: () => void
 }
 
-const SKY = '#5BC4F5'
-const AMBER = '#F59E0B'
-
-function fmt(n: number | null, prefix = true): string {
-  if (n === null) return '—'
-  const sign = prefix && n >= 0 ? '+' : ''
-  return `${sign}${n.toFixed(1)}`
-}
-
 export function SubjectCard({ subject, grades, onClick }: SubjectCardProps) {
-  const color = subject.bloc === 'data' ? SKY : AMBER
+  const initial = subject.name.charAt(0).toUpperCase()
 
   const withActual = grades.filter((g) => g.actual !== null)
-  const avg =
-    withActual.length > 0
-      ? withActual.reduce((sum, g) => sum + (g.actual as number), 0) / withActual.length
-      : null
+  const avg = withActual.length > 0
+    ? withActual.reduce((sum, g) => sum + (g.actual as number), 0) / withActual.length
+    : null
 
-  const withBoth = grades.filter((g) => g.actual !== null && g.predicted !== null)
-  const deltaAvg =
-    withBoth.length > 0
-      ? withBoth.reduce((sum, g) => sum + ((g.actual as number) - g.predicted), 0) /
-        withBoth.length
-      : null
-
-  const sorted = [...grades].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
-  const lastGrade = sorted.find((g) => g.actual !== null) ?? null
-  const lastDelta =
-    lastGrade ? (lastGrade.actual as number) - lastGrade.predicted : null
-
-  const sparkValues = [...grades]
-    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-    .filter((g) => g.actual !== null)
-    .map((g) => g.actual as number)
-
-  const nextPredicted =
-    [...grades]
-      .sort((a, b) => a.date.localeCompare(b.date))
-      .find((g) => g.actual === null)?.predicted ?? null
+  const count = withActual.length
+  const avgStr = avg !== null ? avg.toFixed(1) : '—'
 
   return (
-    <Card onClick={onClick} className="px-4 py-3 flex flex-col gap-1">
-      {/* Row 1: emoji + name + avg */}
-      <div className="flex items-center justify-between">
-        <span className="flex items-center gap-2 font-semibold text-sm text-text truncate">
-          <span>{subject.emoji}</span>
-          <span className="truncate">{subject.name}</span>
-        </span>
-        <span className="text-sm font-bold shrink-0 ml-2" style={{ color }}>
-          {avg !== null ? `${avg.toFixed(1)}/20` : '—'}
-        </span>
+    <button
+      onClick={onClick}
+      className="w-full flex items-center gap-3 py-3 border-b border-subtle last:border-0 active:opacity-60 transition-opacity text-left"
+    >
+      <div className="w-8 h-8 bg-elevated rounded-lg flex items-center justify-center shrink-0">
+        <span className="text-xs font-bold text-accent">{initial}</span>
       </div>
-
-      {/* Row 2: δavg · count · last δ */}
-      <div className="flex items-center justify-between text-xs text-muted">
-        <span>
-          δ moy : <span className="font-medium">{fmt(deltaAvg)}</span>
-          {' · '}
-          {withActual.length} note{withActual.length !== 1 ? 's' : ''}
-        </span>
-        <span className="font-medium">{fmt(lastDelta)}</span>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-medium text-ink truncate">{subject.name}</p>
+        <p className="text-[10px] text-muted mt-0.5">
+          {count} note{count !== 1 ? 's' : ''} · moy. {avgStr}
+        </p>
       </div>
-
-      {/* Row 3: sparkline */}
-      <div className="mt-1">
-        <Sparkline values={sparkValues} predicted={nextPredicted} color={color} />
-      </div>
-    </Card>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0">
+        <path d="M9 18l6-6-6-6" />
+      </svg>
+    </button>
   )
 }

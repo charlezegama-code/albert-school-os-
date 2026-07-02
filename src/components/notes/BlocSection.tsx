@@ -10,18 +10,18 @@ interface BlocSectionProps {
 
 export function BlocSection({ title, subjects, grades, onSubjectClick }: BlocSectionProps) {
   return (
-    <section className="flex flex-col gap-2">
-      <p className="text-xs font-semibold text-muted uppercase tracking-wide px-1">
-        {title}
-      </p>
-      {subjects.map((subject) => (
-        <SubjectCard
-          key={subject.id}
-          subject={subject}
-          grades={grades.filter((g) => g.subjectId === subject.id)}
-          onClick={() => onSubjectClick(subject.id)}
-        />
-      ))}
+    <section>
+      <p className="text-[10px] font-semibold uppercase tracking-widest text-muted mb-2 px-1">{title}</p>
+      <div className="bg-card border border-subtle rounded-card px-4">
+        {subjects.map((subject) => (
+          <SubjectCard
+            key={subject.id}
+            subject={subject}
+            grades={grades.filter((g) => g.subjectId === subject.id)}
+            onClick={() => onSubjectClick(subject.id)}
+          />
+        ))}
+      </div>
     </section>
   )
 }

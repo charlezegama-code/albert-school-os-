@@ -18,15 +18,15 @@ export function MonthGrid({ year, month, customEvents }: MonthGridProps) {
     <div>
       <div className="grid grid-cols-7 mb-1">
         {DOW.map((d, i) => (
-          <div key={i} className="text-center text-[9px] font-bold text-white/40 py-1">{d}</div>
+          <div key={i} className="text-center text-[9px] font-semibold tracking-widest text-muted py-1">{d}</div>
         ))}
       </div>
-      <div className="grid grid-cols-7 gap-px">
+      <div className="grid grid-cols-7">
         {days.map((d, i) => {
           const dateStr = toDateStr(d)
           return (
             <DayCell
-              key={i}
+              key={dateStr + i}
               date={d}
               events={getEventsForDate(dateStr, customEvents)}
               isCurrentMonth={d.getMonth() === month}

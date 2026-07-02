@@ -7,13 +7,15 @@ import type { EventType } from '../../types'
 
 const EVENT_TYPES: EventType[] = ['COURS', 'BDD', 'EXAMEN', 'DEVOIR', 'PERSO']
 
+const inputCls = 'bg-elevated border border-subtle rounded-lg px-3 py-2.5 text-sm text-ink placeholder-muted focus:outline-none focus:border-accent w-full'
+
 export function AddEventModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const addEvent = useStore((s) => s.addEvent)
-  const [title, setTitle]   = useState('')
-  const [type, setType]     = useState<EventType>('DEVOIR')
-  const [start, setStart]   = useState(toDateStr(new Date()))
-  const [end, setEnd]       = useState('')
-  const [note, setNote]     = useState('')
+  const [title, setTitle] = useState('')
+  const [type, setType]   = useState<EventType>('DEVOIR')
+  const [start, setStart] = useState(toDateStr(new Date()))
+  const [end, setEnd]     = useState('')
+  const [note, setNote]   = useState('')
 
   useEffect(() => {
     if (open) {
@@ -36,50 +38,48 @@ export function AddEventModal({ open, onClose }: { open: boolean; onClose: () =>
       {open && (
         <div className="fixed inset-0 z-50 flex items-end">
           <motion.div
-            className="absolute inset-0 bg-black/50"
+            className="absolute inset-0 bg-black/70"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.div
-            className="relative w-full bg-white rounded-t-2xl p-5 pb-8"
+            className="relative w-full bg-card border-t border-subtle rounded-t-2xl p-5 pb-8"
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
-            transition={{ type: 'tween', duration: 0.25 }}
+            transition={{ type: 'tween', duration: 0.2, ease: 'easeOut' }}
           >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-bold text-text">Ajouter un événement</h2>
-              <button onClick={onClose} className="text-muted"><X size={20} /></button>
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-base font-bold text-ink">Ajouter un événement</h2>
+              <button onClick={onClose} className="text-muted active:text-ink transition-colors"><X size={18} /></button>
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
                 required value={title} onChange={(e) => setTitle(e.target.value)}
                 placeholder="Titre"
-                className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-text focus:outline-none focus:border-sky"
+                className={inputCls}
               />
               <select
                 value={type} onChange={(e) => setType(e.target.value as EventType)}
-                className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-text focus:outline-none focus:border-sky"
+                className={inputCls}
               >
                 {EVENT_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
               </select>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[10px] text-muted font-medium block mb-1">Début</label>
-                  <input type="date" value={start} onChange={(e) => setStart(e.target.value)}
-                    className="border border-gray-200 rounded-xl px-2 py-2 text-xs w-full focus:outline-none focus:border-sky" />
+                  <label className="text-[10px] text-muted font-semibold uppercase tracking-wider block mb-1">Début</label>
+                  <input type="date" value={start} onChange={(e) => setStart(e.target.value)} className={inputCls} />
                 </div>
                 <div>
-                  <label className="text-[10px] text-muted font-medium block mb-1">Fin (opt.)</label>
-                  <input type="date" value={end} onChange={(e) => setEnd(e.target.value)}
-                    className="border border-gray-200 rounded-xl px-2 py-2 text-xs w-full focus:outline-none focus:border-sky" />
+                  <label className="text-[10px] text-muted font-semibold uppercase tracking-wider block mb-1">Fin (opt.)</label>
+                  <input type="date" value={end} onChange={(e) => setEnd(e.target.value)} className={inputCls} />
                 </div>
               </div>
               <input
                 value={note} onChange={(e) => setNote(e.target.value)}
                 placeholder="Note (optionnel)"
-                className="border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-text focus:outline-none focus:border-sky"
+                className={inputCls}
               />
               <button type="submit"
-                className="bg-sky text-navy font-bold rounded-xl py-3 mt-1 active:scale-95 transition-transform">
+                className="bg-accent text-ink font-bold rounded-lg py-3 mt-1 active:opacity-80 transition-opacity text-sm tracking-wide">
                 Ajouter
               </button>
             </form>

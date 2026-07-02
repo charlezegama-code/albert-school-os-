@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { PageShell } from '../components/layout/PageShell'
-import { GaugeBar } from '../components/ui/GaugeBar'
 import { BlocSection } from '../components/notes/BlocSection'
 import { GradeModal } from '../components/notes/GradeModal'
 import { DATA_SUBJECTS, BIZ_SUBJECTS, SUBJECTS } from '../data/subjects'
@@ -18,27 +17,38 @@ export function Notes({ direction }: { direction: number }) {
     setModalOpen(true)
   }
 
-  function avgForBloc(subjects: Subject[]): number | null {
+  function avg(subjects: Subject[]): number | null {
     const ids = new Set(subjects.map((s) => s.id))
     const actual = grades.filter((g) => ids.has(g.subjectId) && g.actual !== null)
-    if (actual.length === 0) return null
+    if (!actual.length) return null
     return actual.reduce((sum, g) => sum + (g.actual as number), 0) / actual.length
   }
 
-  const dataAvg = avgForBloc(DATA_SUBJECTS)
-  const bizAvg  = avgForBloc(BIZ_SUBJECTS)
+  const dataAvg = avg(DATA_SUBJECTS)
+  const bizAvg  = avg(BIZ_SUBJECTS)
 
   return (
     <PageShell direction={direction}>
-      <div className="bg-navy px-4 pt-12 pb-5">
-        <h1 className="text-white font-bold text-base mb-4">Notes & Scores</h1>
-        <div className="flex gap-3">
-          <GaugeBar label="Data / Tech" value={dataAvg} color="#5BC4F5" />
-          <GaugeBar label="Business" value={bizAvg} color="#F59E0B" />
+      {/* Header */}
+      <div className="px-4 pt-14 pb-4 border-b border-subtle">
+        <h1 className="text-xl font-bold text-ink mb-3">Notes</h1>
+        <div className="flex gap-6">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted">Data / Tech</p>
+            <p className="text-2xl font-bold text-accent mt-0.5">
+              {dataAvg !== null ? dataAvg.toFixed(1) : <span className="text-subtle">—</span>}
+            </p>
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-muted">Business</p>
+            <p className="text-2xl font-bold text-warning mt-0.5">
+              {bizAvg !== null ? bizAvg.toFixed(1) : <span className="text-subtle">—</span>}
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="p-4 flex flex-col gap-4">
+      <div className="p-4 flex flex-col gap-5">
         <BlocSection
           title="Data / Tech"
           subjects={DATA_SUBJECTS}
