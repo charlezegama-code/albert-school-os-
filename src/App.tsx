@@ -16,7 +16,7 @@ export default function App() {
   useEffect(() => {
     const prev = PAGE_ORDER[prevPathname] ?? 0
     const curr = PAGE_ORDER[location.pathname] ?? 0
-    setDirection(curr >= prev ? 1 : -1)
+    setDirection(curr > prev ? 1 : curr < prev ? -1 : 0)
     setPrevPathname(location.pathname)
   }, [location.pathname])
 
