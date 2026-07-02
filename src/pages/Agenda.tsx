@@ -12,7 +12,8 @@ import { useStore } from '../store/useStore'
 type ViewMode = 'month' | 'week'
 
 function fmtDate(s: string) {
-  return new Date(s).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
+  const [y, m, d] = s.split('-').map(Number)
+  return new Date(y, m - 1, d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
 }
 
 export function Agenda({ direction }: { direction: number }) {

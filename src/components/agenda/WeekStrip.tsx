@@ -38,7 +38,7 @@ export function WeekStrip({ referenceDate, customEvents }: { referenceDate: Date
         const events  = getEventsForDate(dateStr, customEvents).slice(0, 2)
         const isToday = dateStr === todayStr
         return (
-          <div key={i} className="flex-1 flex flex-col items-center gap-1">
+          <div key={dateStr} className="flex-1 flex flex-col items-center gap-1">
             <span className="text-[8px] text-white/40 font-semibold uppercase">{DOW[i]}</span>
             <span
               className={`text-[11px] font-bold w-6 h-6 flex items-center justify-center rounded-full ${
@@ -48,8 +48,8 @@ export function WeekStrip({ referenceDate, customEvents }: { referenceDate: Date
               {d.getDate()}
             </span>
             <div className="flex gap-0.5 h-1.5">
-              {events.map((e, j) => (
-                <div key={j} className="w-1.5 h-1.5 rounded-full" style={{ background: EVENT_COLORS[e.type] }} />
+              {events.map((e) => (
+                <div key={e.id} className="w-1.5 h-1.5 rounded-full" style={{ background: EVENT_COLORS[e.type] }} />
               ))}
             </div>
           </div>

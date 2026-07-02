@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useStore } from '../../store/useStore'
+import { toDateStr } from '../../lib/calendarUtils'
 import type { EventType } from '../../types'
 
 const EVENT_TYPES: EventType[] = ['COURS', 'BDD', 'EXAMEN', 'DEVOIR', 'PERSO']
@@ -10,15 +11,23 @@ export function AddEventModal({ open, onClose }: { open: boolean; onClose: () =>
   const addEvent = useStore((s) => s.addEvent)
   const [title, setTitle]   = useState('')
   const [type, setType]     = useState<EventType>('DEVOIR')
-  const [start, setStart]   = useState(new Date().toISOString().split('T')[0])
+  const [start, setStart]   = useState(toDateStr(new Date()))
   const [end, setEnd]       = useState('')
   const [note, setNote]     = useState('')
+
+  useEffect(() => {
+    if (open) {
+      setTitle(''); setType('DEVOIR')
+      setStart(toDateStr(new Date()))
+      setEnd(''); setNote('')
+    }
+  }, [open])
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!title.trim()) return
+    if (end && end < start) return
     addEvent({ title: title.trim(), type, startDate: start, endDate: end || start, note: note || null })
-    setTitle(''); setNote(''); setEnd('')
     onClose()
   }
 
