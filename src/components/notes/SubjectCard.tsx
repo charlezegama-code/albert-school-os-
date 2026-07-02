@@ -26,7 +26,7 @@ export function SubjectCard({ subject, grades, onClick }: SubjectCardProps) {
       ? withActual.reduce((sum, g) => sum + (g.actual as number), 0) / withActual.length
       : null
 
-  const withBoth = grades.filter((g) => g.actual !== null)
+  const withBoth = grades.filter((g) => g.actual !== null && g.predicted !== null)
   const deltaAvg =
     withBoth.length > 0
       ? withBoth.reduce((sum, g) => sum + ((g.actual as number) - g.predicted), 0) /

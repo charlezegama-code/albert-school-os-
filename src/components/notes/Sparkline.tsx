@@ -27,7 +27,7 @@ export function Sparkline({ values, predicted, color }: SparklineProps) {
     'Z',
   ].join(' ')
 
-  const predX = predicted != null ? Math.min(toX(values.length, values.length), 100) : null
+  const predX = predicted != null ? Math.min(toX(values.length, values.length + 1), 100) : null
   const predY = predicted != null ? toY(predicted) : null
 
   return (
