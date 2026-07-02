@@ -5,7 +5,7 @@ interface GaugeBarProps {
 }
 
 export function GaugeBar({ label, value, color }: GaugeBarProps) {
-  const pct = value !== null ? (value / 20) * 100 : 0
+  const pct = value !== null ? Math.min((value / 20) * 100, 100) : 0
   return (
     <div className="flex-1 rounded-xl p-2.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
       <div className="text-[9px] font-bold uppercase tracking-wide text-white/50 mb-1">{label}</div>
