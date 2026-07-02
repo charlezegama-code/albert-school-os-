@@ -25,11 +25,12 @@ export function AddEventModal({ open, onClose }: { open: boolean; onClose: () =>
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          className="fixed inset-0 z-50 flex items-end"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-        >
-          <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+        <div className="fixed inset-0 z-50 flex items-end">
+          <motion.div
+            className="absolute inset-0 bg-black/50"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
           <motion.div
             className="relative w-full bg-white rounded-t-2xl p-5 pb-8"
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
@@ -74,7 +75,7 @@ export function AddEventModal({ open, onClose }: { open: boolean; onClose: () =>
               </button>
             </form>
           </motion.div>
-        </motion.div>
+        </div>
       )}
     </AnimatePresence>
   )
