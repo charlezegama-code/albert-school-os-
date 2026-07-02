@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { nanoid } from 'nanoid'
-import type { AppState, Grade, CalendarEvent } from '../types'
+import type { AppState } from '../types'
 
 export const useStore = create<AppState>()(
   persist(
