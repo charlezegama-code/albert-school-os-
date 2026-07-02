@@ -10,7 +10,7 @@ export function Sparkline({ values, predicted, color }: SparklineProps) {
   const toX = (i: number, total: number) =>
     total === 1 ? 50 : 5 + (i / (total - 1)) * 90
 
-  const toY = (v: number) => 32 - (v / 20) * 28 + 2
+  const toY = (v: number) => 30 - (v / 20) * 26
 
   const points = values.map((v, i) => ({ x: toX(i, values.length), y: toY(v) }))
 
@@ -21,13 +21,13 @@ export function Sparkline({ values, predicted, color }: SparklineProps) {
   const lastY = points[points.length - 1].y
 
   const areaPath = [
-    `M ${firstX} 34`,
+    `M ${firstX} 30`,
     ...points.map((p) => `L ${p.x} ${p.y}`),
-    `L ${lastX} 34`,
+    `L ${lastX} 30`,
     'Z',
   ].join(' ')
 
-  const predX = predicted != null ? Math.min(toX(values.length, values.length + 1), 100) : null
+  const predX = predicted != null ? Math.min(lastX + 10, 100) : null
   const predY = predicted != null ? toY(predicted) : null
 
   return (

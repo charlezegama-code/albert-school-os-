@@ -46,7 +46,9 @@ export function SubjectCard({ subject, grades, onClick }: SubjectCardProps) {
     .map((g) => g.actual as number)
 
   const nextPredicted =
-    grades.find((g) => g.actual === null)?.predicted ?? null
+    [...grades]
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .find((g) => g.actual === null)?.predicted ?? null
 
   return (
     <Card onClick={onClick} className="px-4 py-3 flex flex-col gap-1">
